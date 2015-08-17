@@ -260,8 +260,9 @@ void powermkrange(double a, double b, double c, double d,
   *wl = argmin(t1, t2, t3, t4);
   *wu = argmax(t1, t2, t3, t4);
 
-  cerr << "expression.cpp::powermkrange(): method not functional\n";
-  exit(148);
+  // TODO FIXME
+  //cerr << "expression.cpp::powermkrange(): method not functional\n";
+  //exit(148);
 }
 
 ///////////// classes ////////////////
@@ -739,13 +740,13 @@ void BasicExpression::CreateFastEvalTreeRecursive(FastEvalTree* fet) {
 
 void BasicExpression::Debug (void) const {
   Int s = GetSize();
-  cerr << "BasicExpression: Debug:\n";
-  cerr << "\tthis   = " << this << endl;
-  cerr << "\toptype = " << GetOpType() << endl;
-  cerr << "\tnodes  = " << s << endl;
+  //cerr << "BasicExpression: Debug:\n";
+  //cerr << "\tthis   = " << this << endl;
+  //cerr << "\toptype = " << GetOpType() << endl;
+  //cerr << "\tnodes  = " << s << endl;
   Int i;
   for (i = 0; i < s; i++) {
-    cerr << "\tnode " << i << ": " << GetNode(i)->GetOpType() << endl;
+    //cerr << "\tnode " << i << ": " << GetNode(i)->GetOpType() << endl;
   }
 }  
 
@@ -1124,9 +1125,9 @@ double BasicExpression::Eval(double* varvalues, map<int,int>& varmap,
       break;
     case FRACTION:
       if (GetSize() != 2) {
-	cerr << "BasicExpression::Eval: in [GetSize()!=2]: "
-	     << "fractions should have just 2 operands, but going ahead "
-	     << "anyway...\n";
+	//cerr << "BasicExpression::Eval: in [GetSize()!=2]: "
+	//     << "fractions should have just 2 operands, but going ahead "
+	//     << "anyway...\n";
 	//throw ErrNotPermitted(1, "BasicExpression", "Eval", "GetSize()!=2", 
 	//"fractions should have just 2 operands", 
 	//HELPURL);
@@ -1134,8 +1135,8 @@ double BasicExpression::Eval(double* varvalues, map<int,int>& varmap,
       for(i = 0; i < GetSize(); i++) {
 	tmp = GetNode(i)->Eval(varvalues, varmap, vsize);
 	if (i > 0 && tmp == 0) {
-	  cerr << "BasicExpression::Eval: division by zero not allowed (node "
-	       << i << " evaluates to 0), setting to a large value" << endl;
+	  //cerr << "BasicExpression::Eval: division by zero not allowed (node "
+	  //     << i << " evaluates to 0), setting to a large value" << endl;
 	  //throw ErrDivideByZero(2, "BasicExpression", "Eval", "divisor==0", 
 	  //"division by zero not allowed", HELPURL);
 	  tmp = Ev3NearZero();
@@ -1149,9 +1150,9 @@ double BasicExpression::Eval(double* varvalues, map<int,int>& varmap,
       break;
     case POWER:
       if (GetSize() != 2) {
-	cerr << "BasicExpression::Eval: in [GetSize()!=2]: "
-	     << "powers should have just 2 operands, but going ahead "
-	     << "anyway...\n";
+	//cerr << "BasicExpression::Eval: in [GetSize()!=2]: "
+	//     << "powers should have just 2 operands, but going ahead "
+	//     << "anyway...\n";
 	//throw ErrNotPermitted(3, "BasicExpression", "Eval", "GetSize()!=2", 
 	//"powers should have just 2 operands", 
 	//HELPURL);
@@ -1172,15 +1173,15 @@ double BasicExpression::Eval(double* varvalues, map<int,int>& varmap,
     case LOG:
       tmp = GetNode(0)->Eval(varvalues, varmap, vsize);
       if (tmp < 0) {
-	cerr << "BasicExpression::Eval: log of negative not allowed ("
-	     << "argument evaluates to < 0), taking absolute value" << endl;
+	//cerr << "BasicExpression::Eval: log of negative not allowed ("
+	//     << "argument evaluates to < 0), taking absolute value" << endl;
 	//throw ErrNotPermitted(6, "BasicExpression", "Eval", "log arg < 0", 
 	//"log of negative not allowed", HELPURL);
 	tmp = -tmp;
       } else if (tmp == 0) {
-	cerr << "BasicExpression::Eval: log of zero not allowed ("
-	     << "argument evaluates to 0), setting to large negative value" 
-	     << endl;
+	//cerr << "BasicExpression::Eval: log of zero not allowed ("
+	//     << "argument evaluates to 0), setting to large negative value" 
+	//     << endl;
 	//throw ErrNotPermitted(7, "BasicExpression", "Eval", "log arg == 0", 
 	//"log of zero not allowed", HELPURL);
 	tmp = Ev3NearZero();
@@ -1217,8 +1218,8 @@ double BasicExpression::Eval(double* varvalues, map<int,int>& varmap,
     case SQRT:
       tmp = GetNode(0)->Eval(varvalues, varmap, vsize);
       if (tmp < 0) {
-	cerr << "BasicExpression::Eval: sqrt of negative not allowed, "
-	     << "taking absolute value" << endl;
+	//cerr << "BasicExpression::Eval: sqrt of negative not allowed, "
+	//     << "taking absolute value" << endl;
 	//throw ErrNotPermitted(9, "BasicExpression", "Eval", "sqrt arg < 0", 
 	//"sqrt of negative not allowed", HELPURL);
 	tmp = -tmp;
@@ -1323,9 +1324,9 @@ double BasicExpression::FastEvalRecursive(FastEvalTree* fet,
       break;
     case FRACTION:
       if (fet->nodesize != 2) {
-	cerr << "BasicExpression::FastEvalRecursive: in [GetSize()!=2]: "
-	     << "fractions should have just 2 operands, but going ahead "
-	     << "anyway...\n";
+	//cerr << "BasicExpression::FastEvalRecursive: in [GetSize()!=2]: "
+	//     << "fractions should have just 2 operands, but going ahead "
+	//     << "anyway...\n";
 	//throw ErrNotPermitted(1, "BasicExpression", "Eval", "GetSize()!=2", 
 	//"fractions should have just 2 operands", 
 	//HELPURL);
@@ -1333,9 +1334,9 @@ double BasicExpression::FastEvalRecursive(FastEvalTree* fet,
       for(i = 0; i < fet->nodesize; i++) {
 	tmp = FastEvalRecursive(&fet->nodes[i], varvalues, varmap, vsize);
 	if (i > 0 && tmp == 0) {
-	  cerr << "BasicExpression::FastEvalRecursive: "
-	       << "division by zero not allowed (node "
-	       << i << " evaluates to 0), setting to a large value" << endl;
+	  //cerr << "BasicExpression::FastEvalRecursive: "
+	  //     << "division by zero not allowed (node "
+	  //     << i << " evaluates to 0), setting to a large value" << endl;
 	  //throw ErrDivideByZero(2, "BasicExpression", "Eval", "divisor==0", 
 	  //"division by zero not allowed", HELPURL);
 	  tmp = Ev3NearZero();
@@ -1349,9 +1350,9 @@ double BasicExpression::FastEvalRecursive(FastEvalTree* fet,
       break;
     case POWER:
       if (fet->nodesize != 2) {
-	cerr << "BasicExpression::FastEvalRecursive: in [GetSize()!=2]: "
-	     << "powers should have just 2 operands, but going ahead "
-	     << "anyway...\n";
+	//cerr << "BasicExpression::FastEvalRecursive: in [GetSize()!=2]: "
+	//     << "powers should have just 2 operands, but going ahead "
+	//     << "anyway...\n";
 	//throw ErrNotPermitted(3, "BasicExpression", "Eval", "GetSize()!=2", 
 	//"powers should have just 2 operands", 
 	//HELPURL);
@@ -1375,15 +1376,15 @@ double BasicExpression::FastEvalRecursive(FastEvalTree* fet,
     case LOG:
       tmp = FastEvalRecursive(&fet->nodes[0], varvalues, varmap, vsize);
       if (tmp < 0) {
-	cerr << "BasicExpression::FastEvalRecursive: log of negative not allowed ("
-	     << "argument evaluates to < 0), taking absolute value" << endl;
+	//cerr << "BasicExpression::FastEvalRecursive: log of negative not allowed ("
+	//     << "argument evaluates to < 0), taking absolute value" << endl;
 	//throw ErrNotPermitted(6, "BasicExpression", "Eval", "log arg < 0", 
 	//"log of negative not allowed", HELPURL);
 	tmp = -tmp;
       } else if (tmp == 0) {
-	cerr << "BasicExpression::FastEvalRecursive: log of zero not allowed ("
-	     << "argument evaluates to 0), setting to large negative value" 
-	     << endl;
+	//cerr << "BasicExpression::FastEvalRecursive: log of zero not allowed ("
+	//     << "argument evaluates to 0), setting to large negative value" 
+	//     << endl;
 	//throw ErrNotPermitted(7, "BasicExpression", "Eval", "log arg == 0", 
 	//"log of zero not allowed", HELPURL);
 	tmp = Ev3NearZero();
@@ -1428,9 +1429,9 @@ double BasicExpression::FastEvalRecursive(FastEvalTree* fet,
     case SQRT:
       tmp = FastEvalRecursive(&fet->nodes[0], varvalues, varmap, vsize);
       if (tmp < 0) {
-	cerr << "BasicExpression::FastEvalRecursive: "
-	     << "sqrt of negative not allowed, "
-	     << "taking absolute value" << endl;
+	//cerr << "BasicExpression::FastEvalRecursive: "
+	//     << "sqrt of negative not allowed, "
+	//     << "taking absolute value" << endl;
 	//throw ErrNotPermitted(9, "BasicExpression", "Eval", "sqrt arg < 0", 
 	//"sqrt of negative not allowed", HELPURL);
 	tmp = -tmp;
@@ -2134,8 +2135,8 @@ bool BasicExpression::GetLinearInfo(vector<double>& lincoeff,
       for(i = 0; i < GetSize(); i++) {
 	if (GetNode(i)->IsConstant()) {
 	  if (i > 0) {
-	    cerr << "BasicExpression::GetLinearInfo: WARNING: "
-		 << "run Simplify() first\n";
+	    //cerr << "BasicExpression::GetLinearInfo: WARNING: "
+		 //<< "run Simplify() first\n";
 	  }
 	  c += GetNode(i)->GetValue();
 	} else if (GetNode(i)->IsVariable() && 
@@ -2194,8 +2195,8 @@ bool BasicExpression::GetPureLinearInfo(vector<double>& lincoeff,
       for(i = 0; i < GetSize(); i++) {
 	if (GetNode(i)->IsConstant()) {
 	  if (i > 0) {
-	    cerr << "BasicExpression::GetLinearInfo: WARNING: "
-		 << "run Simplify() first\n";
+	    //cerr << "BasicExpression::GetLinearInfo: WARNING: "
+		 //<< "run Simplify() first\n";
 	  }
 	  c += GetNode(i)->GetValue();
 	} else if (GetNode(i)->IsVariable() && 
@@ -2532,19 +2533,19 @@ void BasicExpression::Interval(map<int,double>& Vlb, map<int,double>& Vub,
       }
       break;
     case COT:
-      cerr << "expression.cpp::Interval(): cot() not implemented\n";
+      //cerr << "expression.cpp::Interval(): cot() not implemented\n";
       break;
     case SINH:
-      cerr << "expression.cpp::Interval(): sinh() not implemented\n";
+      //cerr << "expression.cpp::Interval(): sinh() not implemented\n";
       break;
     case COSH:
-      cerr << "expression.cpp::Interval(): cosh() not implemented\n";
+      //cerr << "expression.cpp::Interval(): cosh() not implemented\n";
       break;
     case TANH:
-      cerr << "expression.cpp::Interval(): tanh() not implemented\n";
+      //cerr << "expression.cpp::Interval(): tanh() not implemented\n";
       break;
     case COTH:
-      cerr << "expression.cpp::Interval(): coth() not implemented\n";
+      //cerr << "expression.cpp::Interval(): coth() not implemented\n";
       break;
     case SQRT:
       t1 = std::sqrt(tmplb[0]);
@@ -4654,8 +4655,8 @@ Expression DiffNoSimplify(const Expression& ac, Int vi) {
     if (a->IsLeaf()) {
       if (a->GetOpType() == CONST || a->GetVarIndex() != vi) {
 	// safety check
-	cerr << "Expression::Diff: warning: this node should "
-	     << "not diff to zero\n";
+	//cerr << "Expression::Diff: warning: this node should "
+	//     << "not diff to zero\n";
 	return zero;
       } else {
 	// variable vi, check exponent
@@ -4704,8 +4705,8 @@ Expression DiffNoSimplify(const Expression& ac, Int vi) {
       case PRODUCT:
 	if (sz == 1) {
 	  // warn about product with one operand 
-	  cerr << "Expression::Diff: warning: product with 1 operand "
-	       << "should not occur\n";
+	  //cerr << "Expression::Diff: warning: product with 1 operand "
+	  //     << "should not occur\n";
 	} 
 	ret = Diff(a->GetNode(0), vi);  // f_0'
 	for(j = 1; j < sz; j++) {

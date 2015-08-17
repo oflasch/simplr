@@ -8,7 +8,7 @@
 ##' Basic Symbolic Expression Simplification
 ##'
 ##' Simplifies \code{sexp} by applying basic algebraic simplification rules. 
-##' \code{simplify} is a S3 generic method with support for objects of class
+##' \code{simplify} is a S3 generic method with support for objects of class
 ##' \code{numeric}, \code{integer}, \code{name}, \code{call}, and
 ##' \code{function}.
 ##' SimplR uses code from the Ev3 computer algebra system to implement
@@ -29,7 +29,7 @@
 ##'
 ##' @useDynLib simplr
 ##' @rdname simplify
-##' @seealso \url{http://www.lix.polytechnique.fr/~liberti/Ev3.pdf} 
+##' @seealso \url{http://www.lix.polytechnique.fr/~liberti/Ev3.pdf}
 ##' @export
 simplify <- function(sexp) UseMethod("simplify")
  
@@ -43,21 +43,21 @@ simplify.call <- function(sexp) {
 ##' @rdname simplify
 ##' @method simplify function 
 ##' @export
-simplify.function <- function(fun) {
-  simplifiedFun <- fun # copy
-  body(simplifiedFun) <- simplify.call(body(fun))
+simplify.function <- function(sexp) {
+  simplifiedFun <- sexp # copy
+  body(simplifiedFun) <- simplify.call(body(sexp))
   return (simplifiedFun)
 }
 
 ##' @rdname simplify
 ##' @method simplify numeric 
 ##' @export
-simplify.numeric <- simplify.call 
+simplify.numeric <- simplify.call
 
 ##' @rdname simplify
 ##' @method simplify integer 
 ##' @export
-simplify.integer <- simplify.call 
+simplify.integer <- simplify.call
 
 ##' @rdname simplify
 ##' @method simplify name 

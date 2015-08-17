@@ -91,15 +91,15 @@ double FastEvalRecursive(FastEvalTree* fet, double* varvalues,
       break;
     case FRACTION:
       if (fet->nodesize != 2) {
-	cerr << "FastEvalRecursive: in [GetSize()!=2]: "
-	     << "fractions should have just 2 operands, but going ahead "
-	     << "anyway...\n";
+	//cerr << "FastEvalRecursive: in [GetSize()!=2]: "
+	//     << "fractions should have just 2 operands, but going ahead "
+	//     << "anyway...\n";
       }
       for(i = 0; i < fet->nodesize; i++) {
 	tmp = FastEvalRecursive(&fet->nodes[i], varvalues, varmap, vsize);
 	if (i > 0 && tmp == 0) {
-	  cerr << "FastEvalRecursive: division by zero not allowed (node "
-	       << i << " evaluates to 0), setting to a large value" << endl;
+	  //cerr << "FastEvalRecursive: division by zero not allowed (node "
+	  //     << i << " evaluates to 0), setting to a large value" << endl;
 	  tmp = Ev3NearZero();
 	}
 	if (i == 0) 
@@ -111,9 +111,9 @@ double FastEvalRecursive(FastEvalTree* fet, double* varvalues,
       break;
     case POWER:
       if (fet->nodesize != 2) {
-	cerr << "FastEvalRecursive: in [GetSize()!=2]: "
-	     << "powers should have just 2 operands, but going ahead "
-	     << "anyway...\n";
+	//cerr << "FastEvalRecursive: in [GetSize()!=2]: "
+	//     << "powers should have just 2 operands, but going ahead "
+	//     << "anyway...\n";
       }
       ret = FastEvalRecursive(&fet->nodes[0], varvalues, varmap, vsize);
       for(i = 1; i < fet->nodesize; i++) {
@@ -134,13 +134,13 @@ double FastEvalRecursive(FastEvalTree* fet, double* varvalues,
     case LOG:
       tmp = FastEvalRecursive(&fet->nodes[0], varvalues, varmap, vsize);
       if (tmp < 0) {
-	cerr << "FastEvalRecursive: log of negative not allowed ("
-	     << "argument evaluates to < 0), taking absolute value" << endl;
+	//cerr << "FastEvalRecursive: log of negative not allowed ("
+	//     << "argument evaluates to < 0), taking absolute value" << endl;
 	tmp = -tmp;
       } else if (tmp == 0) {
-	cerr << "FastEvalRecursive: log of zero not allowed ("
-	     << "argument evaluates to 0), setting to large negative value" 
-	     << endl;
+	//cerr << "FastEvalRecursive: log of zero not allowed ("
+	//     << "argument evaluates to 0), setting to large negative value" 
+	//     << endl;
 	tmp = Ev3NearZero();
       }
       ret = thecoeff * log(tmp);
@@ -183,8 +183,8 @@ double FastEvalRecursive(FastEvalTree* fet, double* varvalues,
     case SQRT:
       tmp = FastEvalRecursive(&fet->nodes[0], varvalues, varmap, vsize);
       if (tmp < 0) {
-	cerr << "FastEvalRecursive: sqrt of negative not allowed, "
-	     << "taking absolute value" << endl;
+	//cerr << "FastEvalRecursive: sqrt of negative not allowed, "
+	//     << "taking absolute value" << endl;
 	tmp = -tmp;
       }
       ret = thecoeff * sqrt(tmp);
@@ -197,7 +197,7 @@ double FastEvalRecursive(FastEvalTree* fet, double* varvalues,
 FastEvalTree* Diff(FastEvalTree* fet, Int varindex) {
   using namespace std;
   FastEvalTree* ret = NULL;
-  cerr << "FastEvalTree|Diff not implemented\n";
+  //cerr << "FastEvalTree|Diff not implemented\n";
   return ret;
 }
 
