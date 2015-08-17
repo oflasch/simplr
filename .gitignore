@@ -1,0 +1,31 @@
+# .gitignore
+# Files that Git shouldn't track
+#
+
+# Ignore Max OS X Finder Desktop Services Store files
+.DS_Store
+
+# Ignore R history files
+.Rhistory
+
+# Ignore Emacs backup files
+*~
+
+# Ignore VI temporaries
+*.swp
+
+# Ignore object files
+*.o
+*.so
+
+# Ignore TeX temporaries
+doc/**/*.log
+doc/**/*.aux
+doc/**/*.toc
+doc/**/*.out
+
+# Ignore R build system temporaries
+*.log
+
+# Ignore RStudio temporaries
+.Rproj.user

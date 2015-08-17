@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# bump-version
+# Updates the version number in the R package skeleton.
+# 2015 sourcewerk UG, Oliver Flasch
+#
+
+# check number and format of arguments...
+if [ 1 -ne $# ] | [[ ! $1 =~ [0-9]+\.[0-9]+\-[0-9]+ ]]; then 
+  echo "Usage: $0 MAJOR.MINOR-PATCHLEVEL"; exit 1
+fi
+
+# bump version in skel/DESCRIPTION using sed...
+VERSION=$1
+sed -i "" "s/^Version:.*$/Version: $VERSION/" skel/DESCRIPTION
+
+# tag git release with version...
+git tag -f $VERSION
+
+echo "Bumped version to $VERSION."

@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# install-package
+# Builds and installs this R package. 
+# 2015 sourcewerk UG, Oliver Flasch
+#
+
+echo INSTALL-PACKAGE started...
+make clean
+make install
+cat install.log
+make distclean
+echo INSTALL-PACKAGE DONE.
+

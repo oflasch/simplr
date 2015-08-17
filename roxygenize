@@ -1,0 +1,8 @@
+#!/usr/bin/env Rscript
+
+require("methods")
+require("roxygen2")
+
+roxygenize(package.dir = "pkg")
+
+# EOF

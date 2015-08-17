@@ -1,0 +1,66 @@
+## simplr.R
+##
+## SimplR - Basic Symbolic Expression Simplification
+## 2015 sourcewerk UG, Oliver Flasch (oliver.flasch@sourcewerk.de)
+## All rights reserved. 
+##
+
+##' Basic Symbolic Expression Simplification
+##'
+##' Simplifies \code{sexp} by applying basic algebraic simplification rules. 
+##' \code{simplify} is a S3 generic method with support for objects of class
+##' \code{numeric}, \code{integer}, \code{name}, \code{call}, and
+##' \code{function}.
+##' SimplR uses code from the Ev3 computer algebra system to implement
+##' expression simplification. The following simplification steps are
+##' performed:
+##' \itemize{
+##'   \item consolidate product coefficients 
+##'   \item distribute coefficients over sums  
+##'   \item convert differences to sums
+##'   \item simplify constants
+##'   \item simplify products
+##'   \item compact linear parts
+##'   \item simplify trigonometrics
+##' }
+##'
+##' @param sexp An R object to simplify. See details.
+##' @return The simplified expression. 
+##'
+##' @useDynLib simplr
+##' @rdname simplify
+##' @seealso \url{http://www.lix.polytechnique.fr/~liberti/Ev3.pdf} 
+##' @export
+simplify <- function(sexp) UseMethod("simplify")
+ 
+##' @rdname simplify
+##' @method simplify call 
+##' @export
+simplify.call <- function(sexp) {
+  .Call("simplify", sexp, PACKAGE = "simplr")
+}
+
+##' @rdname simplify
+##' @method simplify function 
+##' @export
+simplify.function <- function(fun) {
+  simplifiedFun <- fun # copy
+  body(simplifiedFun) <- simplify.call(body(fun))
+  return (simplifiedFun)
+}
+
+##' @rdname simplify
+##' @method simplify numeric 
+##' @export
+simplify.numeric <- simplify.call 
+
+##' @rdname simplify
+##' @method simplify integer 
+##' @export
+simplify.integer <- simplify.call 
+
+##' @rdname simplify
+##' @method simplify name 
+##' @export
+simplify.name <- simplify.call
+

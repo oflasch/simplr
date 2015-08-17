@@ -1,0 +1,10 @@
+Package: simplr 
+Version: 0.1-0
+Title: SimplR - Basic Symbolic Expression Simplification
+Description: SimplR provides basic tools for symbolic expression simplification, e.g. simplify(x*1) => x, or simplify(sin(x)^2+cos(x)^2) => 1. simplr is based on the "Expression v3" (Ev3) 1.0 system by Leo Liberti.
+Author: sourcewerk UG 
+Maintainer: Oliver Flasch <oliver.flasch@sourcewerk.de>
+License: CPL
+ByteCompile: true
+LazyData: true 
+Depends: R (>= 3.0.0), utils
