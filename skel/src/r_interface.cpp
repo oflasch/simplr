@@ -140,7 +140,7 @@ SEXP ev3_expression_to_sexp(Expression expr) {
       return result; 
     } else if (expr->GetOpType() == VAR) {
       string name = expr->GetVarName();
-      if (expr->GetCoeff() == 1) { // TODO may be near 1, also: maybe add special case for -1
+      if (expr->GetCoeff() == 1) { // TODO may be near 1
         if (expr->GetExponent() == 1) {
           PROTECT(result = install(name.c_str()));
           UNPROTECT(1);
@@ -154,7 +154,25 @@ SEXP ev3_expression_to_sexp(Expression expr) {
           UNPROTECT(4);
           return result;
         }
-      } else { // expr->GetCoeff() != 1
+      } else if (expr->GetCoeff() == -1) {
+        if (expr->GetExponent() == 1) {
+          PROTECT(arg1 = install(name.c_str()));
+          PROTECT(args1 = CONS(arg1, R_NilValue));
+          PROTECT(result = LCONS(install("-"), args1));
+          UNPROTECT(3);
+          return result;
+        } else {
+          PROTECT(arg1 = install(name.c_str()));
+          PROTECT(arg2 = allocVector(REALSXP, 1));
+          REAL(arg2)[0] = expr->GetExponent();
+          PROTECT(args1 = CONS(arg1, CONS(arg2, R_NilValue)));
+          PROTECT(arg4 = LCONS(install("^"), args1));
+          PROTECT(args2 = CONS(arg4, R_NilValue));
+          PROTECT(result = LCONS(install("-"), args2));
+          UNPROTECT(6);
+          return result;
+        }
+      } else { // expr->GetCoeff() is not 1 or -1
         if (expr->GetExponent() == 1) {
           PROTECT(arg1 = allocVector(REALSXP, 1));
           REAL(arg1)[0] = expr->GetCoeff();
@@ -269,7 +287,12 @@ SEXP ev3_expression_to_sexp(Expression expr) {
         }
       }
     }
-    if (expr->GetCoeff() != 1) {
+    if (expr->GetCoeff() == -1) {
+      PROTECT(args1 = CONS(result, R_NilValue));
+      protect_count++;
+      PROTECT(result = LCONS(install("-"), args1));
+      protect_count++;
+    } else if (expr->GetCoeff() != 1) {
       PROTECT(arg1 = allocVector(REALSXP, 1));
       protect_count++;
       REAL(arg1)[0] = expr->GetCoeff();
