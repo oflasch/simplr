@@ -7,7 +7,11 @@
 
 ##' Basic Symbolic Expression Simplification
 ##'
-##' Simplifies \code{sexp} by applying basic algebraic simplification rules. 
+##' \code{simplify} simplifies \code{sexp} by applying basic algebraic
+##' simplification rules. 
+##' \code{simplifyq} quotes its argument, i.e. \code{simplifyq(X)} is
+##' equivalent to \code{simplify(quote(X))}.
+##'
 ##' \code{simplify} is a S3 generic method with support for objects of class
 ##' \code{numeric}, \code{integer}, \code{name}, \code{call}, and
 ##' \code{function}.
@@ -32,6 +36,10 @@
 ##' @seealso \url{http://www.lix.polytechnique.fr/~liberti/Ev3.pdf}
 ##' @export
 simplify <- function(sexp) UseMethod("simplify")
+
+##' @rdname simplify
+##' @export
+simplifyq <- function(sexp) simplify(substitute(sexp))
  
 ##' @rdname simplify
 ##' @method simplify call 
