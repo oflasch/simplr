@@ -3,6 +3,7 @@
 #
 
 R_HOME ?= $(shell R RHOME)
+RELEASE_DATE = $(shell date +%Y-%m-%d)
 
 .SILENT:
 .PHONEY: usage help install test check clean distclean package
@@ -59,8 +60,9 @@ distclean: clean
 
 package: clean roxygen
 	echo "Building package..."
-	echo "Date: $(date +%Y-%m-%d)" >> pkg/DESCRIPTION
-	#git log --no-merges -M --date=iso pkg/ > pkg/ChangeLog
+	echo "Release date: $(RELEASE_DATE)"
+	echo "Date: $(RELEASE_DATE)" >> pkg/DESCRIPTION
+	git log --no-merges -M --date=iso pkg/ > pkg/ChangeLog
 	"$(R_HOME)/bin/R" CMD build pkg > build.log 2>&1
 	rm -fR pkg
 	echo "DONE."
