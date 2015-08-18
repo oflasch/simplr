@@ -5,9 +5,9 @@ Description: Basic tools for symbolic expression simplification, e.g. simplify(x
 Authors@R: c(person("Oliver", "Flasch", role = c("aut", "cre"),
                     email = "of@sourcewerk.de"),
              person("Felix", "Gorschlueter", role = "aut",
-                    email = "fg@sourcewerk.de"))
-Author: Oliver Flasch [aut, cre], Felix Gorschlueter [aut]
-Copyright: sourcewerk UG
+                    email = "fg@sourcewerk.de"),
+             person("Leo", "Liberti", role = "ctb"))
+Author: Oliver Flasch [aut, cre], Felix Gorschlueter [aut], Leo Liberti [ctb]
 Maintainer: Oliver Flasch <of@sourcewerk.de>
 License: CPL
 ByteCompile: true
