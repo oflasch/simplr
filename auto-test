@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# auto-test 
+# Continuously runs the tests of this R package. 
+# 2015 sourcewerk UG, Oliver Flasch
+#
+
+echo AUTO-TEST started...
+R -e 'library(testthat); auto_test(code_path = "skel/R", test_path="skel/tests/testthat")'
+
