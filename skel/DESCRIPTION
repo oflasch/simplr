@@ -8,7 +8,7 @@ Authors@R: c(person("Oliver", "Flasch", role = c("aut", "cre"),
                     email = "fg@sourcewerk.de"))
 Author: Oliver Flasch [aut, cre], Felix Gorschlueter [aut]
 Copyright: sourcewerk UG
-Maintainer: Oliver Flasch of@sourcewerk.de>
+Maintainer: Oliver Flasch <of@sourcewerk.de>
 License: CPL
 ByteCompile: true
 LazyData: true 
