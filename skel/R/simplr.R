@@ -33,6 +33,20 @@
 ##' @param sexp An R object to simplify. See details.
 ##' @return The simplified expression. 
 ##'
+##' @examples
+##' simplifyq(3*2+1)              #=> 7
+##'
+##' simplifyq(1 * x)              #=> x
+##' simplifyq(x / x)              #=> 1
+##' simplifyq(x - x)              #=> 0
+##' simplifyq(x + 1 - 1)          #=> x
+##'
+##' simplifyq(f(x) + f(x) + y)    #=> y + 2 * f(x)
+##' simplifyq(sin(x)^2+cos(x)^2)  #=> 1
+##'
+##' simplify(function(a,b) a + a + 3 * f(b) * 5 / f(b))
+##' #=> function(a, b) 15 + 2 * a
+##'
 ##' @useDynLib simplr
 ##' @rdname simplify
 ##' @seealso \url{http://www.lix.polytechnique.fr/~liberti/Ev3.pdf}
