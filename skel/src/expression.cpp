@@ -48,7 +48,7 @@ int memcheckdebugcounter = 0;
 #define ISINTTOLERANCE 1e-8
 bool is_integer(double a) {
   double b = fabs(a);
-  int bi = (int) rint(b);
+  int bi = (int) std::floor(b);
   if (fabs(b - bi) < ISINTTOLERANCE) {
     return true;
   } else {
@@ -58,7 +58,7 @@ bool is_integer(double a) {
 
 bool is_even(double a) {
   if (is_integer(a)) {
-    int ai = (int) rint(a);
+    int ai = (int) std::floor(a);
     if (ai % 2 == 0) {
       return true;
     } else {
@@ -71,7 +71,7 @@ bool is_even(double a) {
 
 bool is_odd(double a) {
   if (is_integer(a)) {
-    int ai = (int) rint(a);
+    int ai = (int) std::floor(a);
     if (ai % 2 == 1) {
       return true;
     } else {
