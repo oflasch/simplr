@@ -491,8 +491,7 @@ public:
 // means that both the operands may be changed, and indeed that the
 // return value is often one of the changed operands.  To make sure
 // you are not changing the operands, use the CopyOf function or the
-// Copy() method in Pointer class; or use the equivalent operators below
-// in order not to touch the argument expressions.
+// Copy() method in Pointer class
 
 // add a link of b to a, return link to created expression
 Expression SumLink(Expression a, Expression b);
@@ -521,7 +520,7 @@ Expression TanhLink(Expression a);
 Expression CothLink(Expression a) throw(ErrNotPermitted);
 Expression SqrtLink(Expression a) throw(ErrNotPermitted);
 
-// these are equivalent to the above but they don't change the arguments
+// these are equivalent to the above (they also change their arguments!) 
 Expression operator + (Expression a, Expression b);
 Expression operator - (Expression a, Expression b);
 Expression operator * (Expression a, Expression b);

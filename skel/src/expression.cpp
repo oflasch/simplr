@@ -921,8 +921,11 @@ bool BasicExpression::operator == (const BasicExpression& t) const {
   if (IsLeaf() && t.IsLeaf()) {
     if (GetOpType() == t.GetOpType()) {
       if (GetOpType() == CONST) {
-	// if both are constants, they're always equal up to coefficient
-	return true;
+        if (GetValue() == t.GetValue()) {
+	        return true; // TODO BUGGY: ev3 seems to think that numeric constants are always saved in the coeff, with value equal to 1, but there are cases where coeff(a) == coeff(b) while val(a) != val(b) !
+        } else {
+          return false;
+        }
       } else if (GetOpType() == VAR && GetVarIndex() == t.GetVarIndex() &&
 		 GetExponent() == t.GetExponent())
 	return true;
@@ -993,8 +996,11 @@ bool BasicExpression::IsEqualToNoCoeff(const Expression& t) const {
   if (IsLeaf() && t->IsLeaf()) {
     if (GetOpType() == t->GetOpType()) {
       if (GetOpType() == CONST) {
-	// if both are constants, they're always equal up to coefficient
-	return true;
+        if (GetValue() == t->GetValue()) {
+	        return true; // TODO BUGGY: ev3 seems to think that numeric constants are always saved in the coeff, with value equal to 1, but there are cases where coeff(a) == coeff(b) while val(a) != val(b) !
+        } else {
+          return false;
+        }
       } else if (GetOpType() == VAR && GetVarIndex() == t->GetVarIndex() &&
 		 GetExponent() == t->GetExponent())
 	return true;
@@ -2951,7 +2957,7 @@ Expression operator + (Expression a, Expression b) {
     return ret;  
   }
   if (!(a->IsConstant() && b->IsConstant()) && a->IsEqualToNoCoeff(b)) {
-    a->SetCoeff(a->GetCoeff() + b->GetCoeff());
+    a->SetCoeff(a->GetCoeff() + b->GetCoeff()); // TODO BUG!
     if (fabs(a->GetCoeff()) < Ev3NearZero()) {
       // simplify to zero - for differences
       Expression zero(0.0);

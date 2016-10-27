@@ -24,6 +24,21 @@ test_that("basic simplification works", {
   expect_identical(s(f(x) + f(x)), u(2 * f(x)))
 })
 
+test_that("advanced simplification works", {
+  expect_identical(s(0/y^3 + 0/y^3), u(0))
+  expect_equal(s(1/y^3 + 1/y^3), u(2 * (1/y^3)))
+  expect_equal(s(2/y^3 + 2/y^3), u(2 * (2/y^3)))
+  expect_equal(s(1/y^3 + 2/y^3), u(1/y^3 + 2/y^3))
+  expect_equal(s(2/y^3 + 1/y^3), u(2/y^3 + 1/y^3))
+  expect_equal(s(1/y^3 + 3/y^3), u(1/y^3 + 3/y^3))
+  expect_equal(s(3/y^3 + 1/y^3), u(3/y^3 + 1/y^3))
+  expect_equal(s(3/(y^3) + 1/(y^3)), u(3/y^3 + 1/y^3))
+  expect_equal(s(1/y^3 + 10/y^3), u(1/y^3 + 10/y^3))
+  expect_equal(s(10/y^3 + 1/y^3), u(10/y^3 + 1/y^3))
+  expect_identical(s(1/y^3 - 1/y^3), u(0))
+  expect_equal(s(1/y^3 - 2/y^3), u(1/y^3 + -(2/y^3)))
+})
+
 test_that("trigonometric simplification works", {
   expect_identical(s(sin(x)^2+cos(x)^2), u(1))
 })

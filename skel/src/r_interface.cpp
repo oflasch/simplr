@@ -21,15 +21,24 @@ struct SexpToEv3ExpressionContext {
 };
 
 Expression sexp_to_ev3_expression_rec(SEXP sexp, SexpToEv3ExpressionContext& ctx) {
-  //Rprintf("expr type: %d\n", TYPEOF(sexp)); // DEBUG
+  
+#ifdef DEBUG
+  Rprintf("expr type: %d\n", TYPEOF(sexp)); // DEBUG
+#endif
   switch (TYPEOF(sexp)) {
     // base cases...
     case INTSXP: {
       Expression result = (double) INTEGER(sexp)[0];
+#ifdef DEBUG
+      Rprintf("sexp_to_ev3_expression_rec: %s\n", result->ToString().c_str());
+#endif
       return result;
     }
     case REALSXP: {
       Expression result = REAL(sexp)[0];
+#ifdef DEBUG
+      Rprintf("sexp_to_ev3_expression_rec: %s\n", result->ToString().c_str());
+#endif
       return result;
     }
     case SYMSXP: {
@@ -43,7 +52,10 @@ Expression sexp_to_ev3_expression_rec(SEXP sexp, SexpToEv3ExpressionContext& ctx
       }
       result->SetVarIndex(ctx.variableIndexMap[name]);
       result->SetVarName(name);
-      //Rprintf("created variable '%s' with index %d\n", name.c_str(), ctx.variableIndexMap[name]); // DEBUG
+#ifdef DEBUG
+      Rprintf("created variable '%s' with index %d\n", name.c_str(), ctx.variableIndexMap[name]); // DEBUG
+      Rprintf("sexp_to_ev3_expression_rec: %s\n", result->ToString().c_str());
+#endif
       return result;
     }
     // recursive cases...
@@ -52,55 +64,103 @@ Expression sexp_to_ev3_expression_rec(SEXP sexp, SexpToEv3ExpressionContext& ctx
       if (!strcmp("+", function_symbol)) { // +
         Expression result = sexp_to_ev3_expression_rec(CADR(sexp), ctx)
           + sexp_to_ev3_expression_rec(CADDR(sexp), ctx);
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec (+): %s\n", result->ToString().c_str());
+#endif
         return result;
       } else if (!strcmp("-", function_symbol) && (2 == length(sexp))) { // unary -
         Expression result = -sexp_to_ev3_expression_rec(CADR(sexp), ctx);
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec (u-): %s\n", result->ToString().c_str());
+#endif
         return result;
       } else if (!strcmp("-", function_symbol) && (3 == length(sexp))) { // binary -
         Expression result = sexp_to_ev3_expression_rec(CADR(sexp), ctx)
           - sexp_to_ev3_expression_rec(CADDR(sexp), ctx);
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec (b-): %s\n", result->ToString().c_str());
+#endif
         return result;
       } else if (!strcmp("*", function_symbol)) { // *
         Expression result = sexp_to_ev3_expression_rec(CADR(sexp), ctx)
           * sexp_to_ev3_expression_rec(CADDR(sexp), ctx);
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec (*): %s\n", result->ToString().c_str());
+#endif
         return result;
       } else if (!strcmp("/", function_symbol)) { // /
         Expression result = sexp_to_ev3_expression_rec(CADR(sexp), ctx)
           / sexp_to_ev3_expression_rec(CADDR(sexp), ctx);
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec (/): %s\n", result->ToString().c_str());
+#endif
         return result;
       } else if (!strcmp("^", function_symbol)) { // ^
         Expression result = sexp_to_ev3_expression_rec(CADR(sexp), ctx)
           ^ sexp_to_ev3_expression_rec(CADDR(sexp), ctx);
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec (^): %s\n", result->ToString().c_str());
+#endif
         return result;
       } else if (!strcmp("log", function_symbol)) { // log
         Expression result = Log(sexp_to_ev3_expression_rec(CADR(sexp), ctx));
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec (log): %s\n", result->ToString().c_str());
+#endif
         return result;
       } else if (!strcmp("exp", function_symbol)) { // exp 
         Expression result = Exp(sexp_to_ev3_expression_rec(CADR(sexp), ctx));
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec (exp): %s\n", result->ToString().c_str());
+#endif
         return result;
       } else if (!strcmp("sin", function_symbol)) { // sin 
         Expression result = Sin(sexp_to_ev3_expression_rec(CADR(sexp), ctx));
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec (sin): %s\n", result->ToString().c_str());
+#endif
         return result;
       } else if (!strcmp("cos", function_symbol)) { // cos 
         Expression result = Cos(sexp_to_ev3_expression_rec(CADR(sexp), ctx));
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec (cos): %s\n", result->ToString().c_str());
+#endif
         return result;
       } else if (!strcmp("tan", function_symbol)) { // tan 
         Expression result = Tan(sexp_to_ev3_expression_rec(CADR(sexp), ctx));
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec (tan): %s\n", result->ToString().c_str());
+#endif
         return result;
       } else if (!strcmp("sinh", function_symbol)) { // sinh 
         Expression result = Sinh(sexp_to_ev3_expression_rec(CADR(sexp), ctx));
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec (sinh): %s\n", result->ToString().c_str());
+#endif
         return result;
       } else if (!strcmp("cosh", function_symbol)) { // cosh 
         Expression result = Cosh(sexp_to_ev3_expression_rec(CADR(sexp), ctx));
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec (cosh): %s\n", result->ToString().c_str());
+#endif
         return result;
       } else if (!strcmp("tanh", function_symbol)) { // tanh 
         Expression result = Tanh(sexp_to_ev3_expression_rec(CADR(sexp), ctx));
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec (tanh): %s\n", result->ToString().c_str());
+#endif
         return result;
       } else if (!strcmp("sqrt", function_symbol)) { // sqrt 
         Expression result = Sqrt(sexp_to_ev3_expression_rec(CADR(sexp), ctx));
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec (sqrt): %s\n", result->ToString().c_str());
+#endif
         return result;
       } else if (!strcmp("(", function_symbol)) { // sexp in parens
         Expression result = sexp_to_ev3_expression_rec(CADR(sexp), ctx);
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec ((): %s\n", result->ToString().c_str());
+#endif
         return result;
       } else {
         list<Expression> arg_list;
@@ -108,6 +168,9 @@ Expression sexp_to_ev3_expression_rec(SEXP sexp, SexpToEv3ExpressionContext& ctx
           arg_list.push_back(sexp_to_ev3_expression_rec(CAR(i), ctx));
         }
         Expression result = Other(string(function_symbol), arg_list);
+#ifdef DEBUG
+        Rprintf("sexp_to_ev3_expression_rec (other function): %s\n", result->ToString().c_str());
+#endif
         return result;
       }
     }
@@ -121,11 +184,17 @@ Expression sexp_to_ev3_expression_rec(SEXP sexp, SexpToEv3ExpressionContext& ctx
 Expression sexp_to_ev3_expression(SEXP sexp) {
   SexpToEv3ExpressionContext ctx;
   ctx.nextVariableIndex = 1;
-  return sexp_to_ev3_expression_rec(sexp, ctx);
+  Expression expr = sexp_to_ev3_expression_rec(sexp, ctx);
+#ifdef DEBUG
+  Rprintf("sexp_to_ev3_expression: %s\n", expr->ToString().c_str());
+#endif
+  return expr;
 }
 
 SEXP ev3_expression_to_sexp(Expression expr) {
-  //Rprintf("ev3_expression_to_sexp: %s\n", expr->ToString().c_str()); // DEBUG 
+#ifdef DEBUG
+  Rprintf("ev3_expression_to_sexp: %s\n", expr->ToString().c_str()); // DEBUG 
+#endif
   SEXP result, args1, args2, arg1, arg2, arg3, arg4;
   if (expr->IsLeaf()) { // leaf node: base case...
     if (expr->GetCoeff() == 0) {
@@ -265,7 +334,9 @@ SEXP ev3_expression_to_sexp(Expression expr) {
         error("ev3_expression_to_sexp: unkown op_type");
     }
 
-    //Rprintf("operator node '%s' of type %d with %d arguments\n", op_label.c_str(), op_type, n_args); // DEBUG
+#ifdef DEBUG
+    Rprintf("operator node '%s' of type %d with %d arguments\n", op_label.c_str(), op_type, n_args); // DEBUG
+#endif
 
     if (n_args == 1) { // unary operator...
       PROTECT(result = LCONS(install(op_label.c_str()), CONS(ev3_expression_to_sexp(expr->GetNode(0)), R_NilValue)));
@@ -276,7 +347,9 @@ SEXP ev3_expression_to_sexp(Expression expr) {
       for (Int i = n_args-1; i >= 0; i--) { // TODO BUGGY
         PROTECT(result = CONS(ev3_expression_to_sexp(expr->GetNode(i)), result));
         protect_count++;
-        //Rprintf("i: %d, child expr: %s\n", i, expr->GetNode(i)->ToString().c_str()); // DEBUG
+#ifdef DEBUG
+        Rprintf("i: %d, child expr: %s\n", i, expr->GetNode(i)->ToString().c_str()); // DEBUG
+#endif
         if (i != n_args-1) {
           PROTECT(result = LCONS(install(op_label.c_str()), result)); // TODO
           protect_count++;
@@ -312,7 +385,13 @@ extern "C" { // R can only .Call C functions...
 SEXP simplify(SEXP sexp) {
   try {
     Expression expr = sexp_to_ev3_expression(sexp);
+#ifdef DEBUG
+    Rprintf("simplify: %s ==> ", expr->ToString().c_str());
+#endif
     Simplify(&expr);
+#ifdef DEBUG
+    Rprintf("%s\n", expr->ToString().c_str());
+#endif
     return ev3_expression_to_sexp(expr); 
   } catch (ErrBase& e) {
     error(e.description.c_str());

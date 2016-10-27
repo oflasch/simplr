@@ -12,25 +12,19 @@ usage:
 	echo "Makefile for the simplr symbolic expression simplification package for R."
 	echo "Usage: make TARGET with TARGET being:"
 	echo ""
-	echo "  check     - Run CRAN check on the package."
-	echo "  clean     - Clean up package cruft."
-	echo "  distclean - Clean up and remove all generated artifacts."
-	echo "  help      - Show this message."
-	echo "  install   - Install the package, writing the output into install.log."
-	echo "  package   - Build source package of last commit."
-	echo "  roxygen   - Roxygenize skel/ into pkg/."
-	echo "  test      - Install package and run unit tests."
+	echo "  check         - Run CRAN check on the package."
+	echo "  clean         - Clean up package cruft."
+	echo "  distclean     - Clean up and remove all generated artifacts."
+	echo "  help          - Show this message."
+	echo "  install       - Install the package, writing the output into install.log."
+	echo "  package       - Build source package of last commit."
+	echo "  roxygen       - Roxygenize skel/ into pkg/."
 
 help: usage
 
 install: clean roxygen
 	echo "Installing package..."
-	"$(R_HOME)/bin/R" CMD INSTALL --no-multiarch pkg > install.log 2>&1 || cat install.log
-	echo "DONE."
-
-test: install
-	echo "Running unit tests..."
-	"$(R_HOME)/bin/Rscript" pkg/inst/unittests/runner.r
+	"$(R_HOME)/bin/R" CMD install --no-multiarch pkg > install.log 2>&1 || cat install.log
 	echo "DONE."
 
 check: clean roxygen

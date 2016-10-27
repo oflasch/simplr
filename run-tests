@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# run-tests 
+# Runs the tests of this R package. 
+# 2015 sourcewerk UG, Oliver Flasch
+#
+
+echo RUN-TESTS started...
+R -e 'library(testthat); test_dir("skel/inst/tests")'
+
